@@ -9,52 +9,34 @@ using System.Diagnostics;
 
 namespace PongGame.Content
 {
-    public class Ball
+    public class Ball : Sprite
     {
-        GraphicsDeviceManager graphics;
-
-        private Texture2D texture;
-        public Vector2 position;
-        public Vector2 velocity;
-        public Vector2 acceleration;
-        public Rectangle rectangle;
-
-        public Ball(Vector2 position, int direction, Texture2D texture, GraphicsDeviceManager graphics) {
-            this.position = position;
-            Direction(direction);
-            Debug.WriteLine("direction " + direction);
-            this.texture = texture;
-            this.graphics = graphics;
-            
+        public Ball(Texture2D texture, Vector2 Position, int direction) : base(texture, Position) {
+            Direction(direction);            
         }
 
-        public void Move() {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * 0.5), (int)(texture.Height * 0.5));
-            if (position.X > graphics.GraphicsDevice.Viewport.Width - rectangle.Width || position.X < 0)
-                velocity.X *= -1;
-            if (position.Y > graphics.GraphicsDevice.Viewport.Height - rectangle.Height || position.Y < 0)
-                velocity.Y *= -1;
+        public void Move() {            
+            if (Position.X > Game1.graphics.GraphicsDevice.Viewport.Width - Rectangle.Width || Position.X < 0)
+                Velocity.X *= -1;
+            if (Position.Y > Game1.graphics.GraphicsDevice.Viewport.Height - Rectangle.Height || Position.Y < 0)
+                Velocity.Y *= -1;
 
-            position += velocity * 3;
-        }
-
-        public void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(texture, rectangle, Color.White);
+            Position += Velocity * 3;
         }
 
         void Direction(int d) {           
             switch (d) {
                 case 0:
-                    velocity = new Vector2(1, 1);
+                    Velocity = new Vector2(1, 1);
                     break;
                 case 1:
-                    velocity = new Vector2(-1, 1);
+                    Velocity = new Vector2(-1, 1);
                     break;
                 case 2:
-                    velocity = new Vector2(1, -1);
+                    Velocity = new Vector2(1, -1);
                     break;
                 case 3:
-                    velocity = new Vector2(-1, -1);
+                    Velocity = new Vector2(-1, -1);
                     break;
             }
         }

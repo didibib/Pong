@@ -45,6 +45,7 @@
     <Compile Include="Content\Input.cs" />
     <Compile Include="Content\Peddle.cs" />
     <Compile Include="Content\Score.cs" />
+    <Compile Include="Content\Sprite.cs" />
     <Compile Include="PongGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

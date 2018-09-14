@@ -10,10 +10,10 @@ namespace PongGame
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random random;
-        Color bgColor = new Color(255, 255, 255);
+        Color bgColor = new Color(0, 255, 255);
 
         Content.Peddle Player1;
         Content.Peddle Player2;
@@ -29,16 +29,15 @@ namespace PongGame
         protected override void Initialize() {
             random = new Random();
             Ball = new Content.Ball(
-                new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2),
-                random.Next(0, 3), 
                 Content.Load<Texture2D>("Sprites/Ball"),
-                graphics);
+                new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2),
+                random.Next(0, 3));
             Player1 = new Content.Peddle(
                 new Vector2(20, graphics.GraphicsDevice.Viewport.Height / 2), 
                 new Vector2(20, 80), 
-                Color.Black, peddleSpeed, 
-                graphics) {
-                input = new Content.Input {
+                Color.Black, peddleSpeed) 
+                {
+                Input = new Content.Input {
                     Up = Keys.W,
                     Down = Keys.S
                 }
@@ -46,9 +45,9 @@ namespace PongGame
             Player2 = new Content.Peddle(
                 new Vector2(graphics.GraphicsDevice.Viewport.Width - 40, graphics.GraphicsDevice.Viewport.Height / 2),
                 new Vector2(20, 80),
-                Color.Black, peddleSpeed,
-                graphics) {
-                input = new Content.Input {
+                Color.Black, peddleSpeed) 
+                {
+                Input = new Content.Input {
                     Up = Keys.Up,
                     Down = Keys.Down
                 }
