@@ -2,18 +2,22 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System;
+using PongGame.Content;
 
 namespace PongGame
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game {
+    public class Game1 : Game
+    {
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random random;
-        Color bgColor = new Color(0, 255, 255);
+        List<Content.Sprite> Sprites;
+        Color bgColor = new Color(255, 255, 255);
 
         Content.Peddle Player1;
         Content.Peddle Player2;
@@ -28,31 +32,35 @@ namespace PongGame
 
         protected override void Initialize() {
             random = new Random();
-            Ball = new Content.Ball(
+            Sprites = new List<Sprite>();
+            Ball = new Ball(
                 Content.Load<Texture2D>("Sprites/Ball"),
                 new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2),
                 random.Next(0, 3));
-            Player1 = new Content.Peddle(
-                new Vector2(20, graphics.GraphicsDevice.Viewport.Height / 2), 
-                new Vector2(20, 80), 
-                Color.Black, peddleSpeed) 
-                {
-                Input = new Content.Input {
+            Sprites.Add(Ball);
+
+            Player1 = new Peddle(
+                new Vector2(20, graphics.GraphicsDevice.Viewport.Height / 2),
+                new Vector2(20, 80),
+                Color.Black, peddleSpeed, new Input {
                     Up = Keys.W,
-                    Down = Keys.S
-                }
-            };
-            Player2 = new Content.Peddle(
+                    Down = Keys.S,
+                    Left = Keys.A,
+                    Right = Keys.D,
+                    Position = Input.SpritePosition.Left
+                });
+            Sprites.Add(Player1);
+            Player2 = new Peddle(
                 new Vector2(graphics.GraphicsDevice.Viewport.Width - 40, graphics.GraphicsDevice.Viewport.Height / 2),
                 new Vector2(20, 80),
-                Color.Black, peddleSpeed) 
-                {
-                Input = new Content.Input {
+                Color.Black, peddleSpeed, new Input {
                     Up = Keys.Up,
-                    Down = Keys.Down
-                }
-            };
-
+                    Down = Keys.Down,
+                    Left = Keys.Left,
+                    Right = Keys.Right,
+                    Position = Input.SpritePosition.Right
+                });
+            Sprites.Add(Player2);
 
             base.Initialize();
         }
@@ -73,10 +81,18 @@ namespace PongGame
                 Exit();
 
             Player1.Move();
-            Player1.CheckBounce(Ball);
+            //Player1.CheckBounce(Ball);
             Player2.Move();
-            Player2.CheckBounce(Ball);
+            //Player2.CheckBounce(Ball);
             Ball.Move();
+
+            for (int i = 0; i < Sprites.Count; i++) {
+                for (int j = 0; j < Sprites.Count; j++) {
+                    if(i != j) {
+                        Sprites[i].CheckCollision(Sprites[j]);
+                    }
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -85,9 +101,9 @@ namespace PongGame
             GraphicsDevice.Clear(bgColor);
 
             spriteBatch.Begin();
-            Player1.Draw(spriteBatch);
-            Player2.Draw(spriteBatch);
-            Ball.Draw(spriteBatch);
+            foreach(Content.Sprite sprite in Sprites) {
+                sprite.Draw(spriteBatch);
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }

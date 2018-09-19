@@ -11,32 +11,35 @@ namespace PongGame.Content
 {
     public class Ball : Sprite
     {
+
+        GraphicsDevice graphics = Game1.graphics.GraphicsDevice;
+
         public Ball(Texture2D texture, Vector2 Position, int direction) : base(texture, Position) {
-            Direction(direction);            
+            StartDirection(direction);            
         }
 
         public void Move() {            
-            if (Position.X > Game1.graphics.GraphicsDevice.Viewport.Width - Rectangle.Width || Position.X < 0)
-                Velocity.X *= -1;
-            if (Position.Y > Game1.graphics.GraphicsDevice.Viewport.Height - Rectangle.Height || Position.Y < 0)
-                Velocity.Y *= -1;
+            if (Position.X > graphics.Viewport.Width - Rectangle.Width || Position.X < 0)
+                Direction.X *= -1;
+            if (Position.Y > graphics.Viewport.Height - Rectangle.Height || Position.Y < 0)
+                Direction.Y *= -1;
 
-            Position += Velocity * 3;
+            Position += Direction * velocity;            
         }
 
-        void Direction(int d) {           
+        void StartDirection(int d) {           
             switch (d) {
                 case 0:
-                    Velocity = new Vector2(1, 1);
+                    Direction = new Vector2(1, 1);
                     break;
                 case 1:
-                    Velocity = new Vector2(-1, 1);
+                    Direction = new Vector2(-1, 1);
                     break;
                 case 2:
-                    Velocity = new Vector2(1, -1);
+                    Direction = new Vector2(1, -1);
                     break;
                 case 3:
-                    Velocity = new Vector2(-1, -1);
+                    Direction = new Vector2(-1, -1);
                     break;
             }
         }
