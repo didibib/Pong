@@ -19,12 +19,13 @@ namespace PongGame.Content
         }
 
         public void Move() {            
-            if (Position.X > graphics.Viewport.Width - Rectangle.Width || Position.X < 0)
+            if (Position.X >= graphics.Viewport.Width - Rectangle.Width/2 || Position.X <= 0 - Rectangle.Width / 2)
                 Direction.X *= -1;
-            if (Position.Y > graphics.Viewport.Height - Rectangle.Height || Position.Y < 0)
+            if (Position.Y >= graphics.Viewport.Height - Rectangle.Height/2 || Position.Y <= 0 - Rectangle.Height / 2)
                 Direction.Y *= -1;
 
-            Position += Direction * velocity;            
+            Velocity += Acceleration;
+            Position += Direction * minSpeed;            
         }
 
         void StartDirection(int d) {           

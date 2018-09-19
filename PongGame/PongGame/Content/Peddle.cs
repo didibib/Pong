@@ -17,13 +17,20 @@ namespace PongGame.Content
         public float rotationVelocity = 3f;
         private float rotMin, rotMax, offsetRot;
 
-        public Peddle(Vector2 position, Vector2 size, Color color, float speed, Input input) : base(size, position, Color.Black) {
+        public Peddle(Texture2D texture, Vector2 position, Vector2 size, Color color, float minSpeed, Input input) : base(texture, position, minSpeed) {
             this.Size = size;
             this.Color = color;
             rotMin = MathHelper.ToRadians(-30);
             rotMax = MathHelper.ToRadians(30);
             this.Input = input;
             offsetRot = MathHelper.ToRadians((int)Input.Position);
+
+            //Texture2 = new Texture2D(Game1.graphics.GraphicsDevice, (int)size.X, (int)size.Y);
+            //Color[] data = new Color[Texture2.Width * Texture2.Height];
+
+            //for (int i = 0; i < data.Length; ++i)
+            //    data[i] = color;
+            //Texture2.SetData(data);
         }
 
         public void Move() {            
@@ -31,9 +38,9 @@ namespace PongGame.Content
             Direction = new Vector2((float)Math.Cos(offsetRot + rotation ), (float)Math.Sin(offsetRot + rotation));
 
             if (Keyboard.GetState().IsKeyDown(Input.Up))
-                Position.Y -= velocity;
+                Position.Y -= minSpeed;
             else if (Keyboard.GetState().IsKeyDown(Input.Down))
-                Position.Y += velocity;
+                Position.Y += minSpeed;
             else if (Keyboard.GetState().IsKeyDown(Input.Left))
                 rotation -= MathHelper.ToRadians(rotationVelocity);
             else if (Keyboard.GetState().IsKeyDown(Input.Right))

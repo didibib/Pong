@@ -40,7 +40,8 @@ namespace PongGame
             Sprites.Add(Ball);
 
             Player1 = new Peddle(
-                new Vector2(20, graphics.GraphicsDevice.Viewport.Height / 2),
+                Content.Load<Texture2D>("Sprites/Peddle"),
+                new Vector2(40, graphics.GraphicsDevice.Viewport.Height / 2),
                 new Vector2(20, 80),
                 Color.Black, peddleSpeed, new Input {
                     Up = Keys.W,
@@ -51,6 +52,7 @@ namespace PongGame
                 });
             Sprites.Add(Player1);
             Player2 = new Peddle(
+                Content.Load<Texture2D>("Sprites/Peddle"),
                 new Vector2(graphics.GraphicsDevice.Viewport.Width - 40, graphics.GraphicsDevice.Viewport.Height / 2),
                 new Vector2(20, 80),
                 Color.Black, peddleSpeed, new Input {
@@ -80,19 +82,19 @@ namespace PongGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            Player1.Move();
-            //Player1.CheckBounce(Ball);
-            Player2.Move();
-            //Player2.CheckBounce(Ball);
-            Ball.Move();
-
             for (int i = 0; i < Sprites.Count; i++) {
-                for (int j = 0; j < Sprites.Count; j++) {
-                    if(i != j) {
-                        Sprites[i].CheckCollision(Sprites[j]);
+                if (Sprites[i] is Ball) {
+                    for (int j = 0; j < Sprites.Count; j++) {
+                        if (i != j) {
+                            Sprites[i].CheckCollision(Sprites[j]);
+                        }
                     }
                 }
             }
+
+            Player1.Move();
+            Player2.Move();
+            Ball.Move();
 
             base.Update(gameTime);
         }
@@ -101,7 +103,7 @@ namespace PongGame
             GraphicsDevice.Clear(bgColor);
 
             spriteBatch.Begin();
-            foreach(Content.Sprite sprite in Sprites) {
+            foreach (Sprite sprite in Sprites) {
                 sprite.Draw(spriteBatch);
             }
             spriteBatch.End();

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Ball.png</SourceFile>
-  <SourceTime>2018-09-14T20:04:37.2116529+02:00</SourceTime>
-  <DestFile>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/bin/Windows/Sprites/Ball.xnb</DestFile>
-  <DestTime>2018-09-19T16:01:57.5076472+02:00</DestTime>
+  <SourceFile>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Peddle.png</SourceFile>
+  <SourceTime>2018-09-19T15:59:39.5719563+02:00</SourceTime>
+  <DestFile>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/bin/Windows/Sprites/Peddle.xnb</DestFile>
+  <DestTime>2018-09-19T16:01:57.5206379+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

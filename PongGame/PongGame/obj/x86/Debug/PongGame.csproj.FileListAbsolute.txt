@@ -24,3 +24,4 @@ C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\obj\x86\D
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\obj\x86\Debug\PongGame.exe
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\obj\x86\Debug\PongGame.pdb
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Ball.xnb
+C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Peddle.xnb
