@@ -11,24 +11,36 @@ namespace PongGame.Content
 {
     public class Ball : Sprite
     {
-
         GraphicsDevice graphics = Game1.graphics.GraphicsDevice;
+        public float speed;
+        private float minSpeed;
+        private float friction = 0.01f;
 
-        public Ball(Texture2D texture, Vector2 Position, int direction) : base(texture, Position) {
-            StartDirection(direction);            
+        public string side;
+
+        public Ball(Texture2D texture, Vector2 position, int direction, float startSpeed) : base(texture, startSpeed) {
+            StartDirection(direction);
+            speed = minSpeed = startSpeed;
+            spriteSpeed = .2f;
+            Position = position;
         }
 
-        public void Move() {            
-            if (Position.X >= graphics.Viewport.Width - Rectangle.Width/2 || Position.X <= 0 - Rectangle.Width / 2)
+        public void Move(GameTime gameTime) {
+            if (Position.X >= graphics.Viewport.Width - Rectangle.Width / 2 || Position.X <= 0 + Rectangle.Width / 2)
                 Direction.X *= -1;
-            if (Position.Y >= graphics.Viewport.Height - Rectangle.Height/2 || Position.Y <= 0 - Rectangle.Height / 2)
+            if (Position.Y >= graphics.Viewport.Height - Rectangle.Height / 2 || Position.Y <= 0 + Rectangle.Height / 2)
                 Direction.Y *= -1;
 
-            Velocity += Acceleration;
-            Position += Direction * minSpeed;            
+            speed = MathHelper.Clamp(speed, minSpeed + 0.2f, 10f);
+            Position += Direction * speed;
+            speed -= friction;
         }
 
-        void StartDirection(int d) {           
+        public void AddSpeed(float increment) {
+            speed += increment;            
+        }       
+
+        private void StartDirection(int d) {
             switch (d) {
                 case 0:
                     Direction = new Vector2(1, 1);
@@ -44,6 +56,5 @@ namespace PongGame.Content
                     break;
             }
         }
-
     }
 }

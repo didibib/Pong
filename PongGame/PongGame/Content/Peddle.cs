@@ -11,53 +11,109 @@ namespace PongGame.Content
 {
     public class Peddle : Sprite
     {
-        public Input Input;
-        public Vector2 Size;
-        public Color Color;
-        public float rotationVelocity = 3f;
         private float rotMin, rotMax, offsetRot;
+        private int maxAngle = 45;
+        public float rotationVelocity = 1f;
+        private float looseAngle = MathHelper.ToRadians(10);
+        private float incrementedRot = 0;
+        private float incMin, incMax;
+        private float scale, scaleMax;
 
-        public Peddle(Texture2D texture, Vector2 position, Vector2 size, Color color, float minSpeed, Input input) : base(texture, position, minSpeed) {
-            this.Size = size;
-            this.Color = color;
-            rotMin = MathHelper.ToRadians(-30);
-            rotMax = MathHelper.ToRadians(30);
-            this.Input = input;
-            offsetRot = MathHelper.ToRadians((int)Input.Position);
+        public float incSpeed = 2f;
+        public bool bCharged = false;
+        private bool setTimer = false;
+        private float maxReleaseTime = 100;
+        public float chargeTimer;
+        private float timer;
+        private Vector2 Velocity;
 
-            //Texture2 = new Texture2D(Game1.graphics.GraphicsDevice, (int)size.X, (int)size.Y);
-            //Color[] data = new Color[Texture2.Width * Texture2.Height];
+        private Input Input;
+        private KeyboardState newKState;
+        private KeyboardState oldKState;
 
-            //for (int i = 0; i < data.Length; ++i)
-            //    data[i] = color;
-            //Texture2.SetData(data);
+
+        public Peddle(Texture2D texture, Input input, Vector2 position, string name) : base(texture, position, "Peddle " + name) {
+            Position = position;
+            offsetRot = MathHelper.ToRadians((int)input.Position);
+            rotation = MathHelper.ToRadians((int)input.Position);
+            rotMin = MathHelper.ToRadians((int)input.Position - maxAngle);
+            rotMax = MathHelper.ToRadians((int)input.Position + maxAngle);
+            incMin = MathHelper.ToRadians(-maxAngle);
+            incMax = MathHelper.ToRadians(maxAngle);
+            scaleMax = Texture.Width / 2;
+            chargeTimer = maxReleaseTime;
         }
 
-        public void Move() {            
-            rotation = MathHelper.Clamp(rotation, rotMin, rotMax);
-            Direction = new Vector2((float)Math.Cos(offsetRot + rotation ), (float)Math.Sin(offsetRot + rotation));
+        public Vector2 Move(Vector2 position, Input input, Vector2 velocity, GameTime gameTime) {
+            Input = input;
+            Velocity = velocity;
+            Position = position;
+            timer = gameTime.ElapsedGameTime.Milliseconds;
 
-            if (Keyboard.GetState().IsKeyDown(Input.Up))
-                Position.Y -= minSpeed;
-            else if (Keyboard.GetState().IsKeyDown(Input.Down))
-                Position.Y += minSpeed;
-            else if (Keyboard.GetState().IsKeyDown(Input.Left))
+            newKState = Keyboard.GetState();
+            if (newKState.IsKeyDown(Input.Left)) {
                 rotation -= MathHelper.ToRadians(rotationVelocity);
-            else if (Keyboard.GetState().IsKeyDown(Input.Right))
-                rotation += MathHelper.ToRadians(rotationVelocity);            
-        }
-
-        public void CheckBounce(Ball ball) {
-            if (ball.Position.X + ball.Rectangle.Width >= Position.X && ball.Position.X <= Position.X + Rectangle.Width) {
-                if (ball.Position.Y + ball.Rectangle.Height >= Position.Y && ball.Position.Y <= Position.Y + Rectangle.Height) {
-                    //ball.Direction.X *= -1;
-                }
-                else {
-                    // UPDATE SCORE: 
-                }
+                incrementedRot -= MathHelper.ToRadians(rotationVelocity);
+                scale = scaleMax;
+                bCharged = true;
             }
+            else if (newKState.IsKeyDown(Input.Right)) {
+                rotation += MathHelper.ToRadians(rotationVelocity);
+                incrementedRot += MathHelper.ToRadians(rotationVelocity);
+                scale = scaleMax;
+                bCharged = true;
+            }
+            else if (newKState.IsKeyDown(Input.Up)) {
+                rotation = Lerp(rotation, -looseAngle + offsetRot, .1f);
+            }
+            else if (newKState.IsKeyDown(Input.Down)) {
+                rotation = Lerp(rotation, looseAngle + offsetRot, .1f);
+            }
+            else {
+                scale = Lerp(scale, 0, 0.8f);
+                if (scale < .1f)
+                    rotation = Lerp(rotation, offsetRot, 0.1f);
+            }
+
+            if (newKState.IsKeyUp(Input.Left) && oldKState.IsKeyDown(Input.Left) || Keyboard.GetState().IsKeyUp(Input.Right) && oldKState.IsKeyDown(Input.Right)) {
+                setTimer = true;
+            }
+
+            if (setTimer) {
+                chargeTimer -= timer;
+            }
+
+            if (chargeTimer <= 0 && setTimer) {
+                chargeTimer = maxReleaseTime;
+                bCharged = false;
+                setTimer = false;
+            }
+            
+
+
+            rotation = MathHelper.Clamp(rotation, rotMin, rotMax);
+            incrementedRot = MathHelper.Clamp(incrementedRot, incMin, incMax);
+            Direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
+
+            oldKState = newKState;
+
+            return Direction;
         }
 
+        public int GetScale() {
+            return (int)scale;
+        }
 
+        public float GetSpeed() {
+            if (bCharged && setTimer) {
+                return incSpeed + Velocity.X + Velocity.Y;
+            }
+            return 0;
+            
+        }
+
+        float Lerp(float start, float stop, float amt) { // https://stackoverflow.com/questions/4353525/floating-point-linear-interpolation
+            return start + amt * (stop - start);
+        }
     }
 }

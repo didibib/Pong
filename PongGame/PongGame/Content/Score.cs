@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace PongGame.Content
 {
-    class Score
+    public class Score
     {
+        //public List<Player> players
+
+        //static void AddScore(string side, string player) {
+        //    for (int i = 0; i < players.Count; i++) {
+        //        if(players[i].name == player)
+        //            players[i].LoseHeart
+        //    }
+        //}
     }
 }

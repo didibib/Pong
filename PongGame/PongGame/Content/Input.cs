@@ -11,10 +11,10 @@ namespace PongGame.Content
     public struct Input
     {
         public enum SpritePosition { Up = 90, Down = -90, Left = 0, Right = 180}
-        public Keys Up { get; set; }
-        public Keys Down { get; set; }
-        public Keys Left { get; set; }
-        public Keys Right { get; set; }        
-        public SpritePosition Position { get; set; }
+        public Keys Up;
+        public Keys Down;
+        public Keys Left;
+        public Keys Right;
+        public SpritePosition Position;
     }
 }

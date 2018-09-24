@@ -16,14 +16,13 @@ namespace PongGame
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random random;
-        List<Content.Sprite> Sprites;
+        List<Sprite> Sprites;
         Color bgColor = new Color(255, 255, 255);
 
-        Content.Peddle Player1;
-        Content.Peddle Player2;
-        Content.Ball Ball;
+        List<Player> Players;
+        Ball Ball;
 
-        float peddleSpeed = 5;
+        float ballSpeed = 3f;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -36,33 +35,64 @@ namespace PongGame
             Ball = new Ball(
                 Content.Load<Texture2D>("Sprites/Ball"),
                 new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2),
-                random.Next(0, 3));
+                random.Next(0, 3),
+                ballSpeed);
             Sprites.Add(Ball);
 
-            Player1 = new Peddle(
+            #region Players
+            Players = new List<Player>() {
+                new Player(
                 Content.Load<Texture2D>("Sprites/Peddle"),
-                new Vector2(40, graphics.GraphicsDevice.Viewport.Height / 2),
-                new Vector2(20, 80),
-                Color.Black, peddleSpeed, new Input {
+                Content.Load<Texture2D>("Sprites/Arrow"),
+                Content.Load<Texture2D>("Sprites/Heart"),
+                new Input() {
                     Up = Keys.W,
                     Down = Keys.S,
                     Left = Keys.A,
                     Right = Keys.D,
                     Position = Input.SpritePosition.Left
-                });
-            Sprites.Add(Player1);
-            Player2 = new Peddle(
+                },
+                "Player1"),
+
+                new Player(
                 Content.Load<Texture2D>("Sprites/Peddle"),
-                new Vector2(graphics.GraphicsDevice.Viewport.Width - 40, graphics.GraphicsDevice.Viewport.Height / 2),
-                new Vector2(20, 80),
-                Color.Black, peddleSpeed, new Input {
+                Content.Load<Texture2D>("Sprites/Arrow"),
+                Content.Load<Texture2D>("Sprites/Heart"),
+                new Input {
                     Up = Keys.Up,
                     Down = Keys.Down,
                     Left = Keys.Left,
                     Right = Keys.Right,
                     Position = Input.SpritePosition.Right
-                });
-            Sprites.Add(Player2);
+                },
+                "Player2"),
+                new Player(
+                Content.Load<Texture2D>("Sprites/Peddle"),
+                Content.Load<Texture2D>("Sprites/Arrow"),
+                Content.Load<Texture2D>("Sprites/Heart"),
+                new Input {
+                    Up = Keys.J,
+                    Down = Keys.L,
+                    Left = Keys.I,
+                    Right = Keys.K,
+                    Position = Input.SpritePosition.Up
+                },
+                "Player3"),
+                new Player(
+                Content.Load<Texture2D>("Sprites/Peddle"),
+                Content.Load<Texture2D>("Sprites/Arrow"),
+                Content.Load<Texture2D>("Sprites/Heart"),
+                new Input {
+                    Up = Keys.J,
+                    Down = Keys.L,
+                    Left = Keys.I,
+                    Right = Keys.K,
+                    Position = Input.SpritePosition.Down
+                },
+                "Player4")
+            };
+            #endregion
+            Sprites.AddRange(Players);
 
             base.Initialize();
         }
@@ -86,15 +116,18 @@ namespace PongGame
                 if (Sprites[i] is Ball) {
                     for (int j = 0; j < Sprites.Count; j++) {
                         if (i != j) {
-                            Sprites[i].CheckCollision(Sprites[j]);
+                            Ball.CheckCollision(Sprites[j], Ball);
                         }
                     }
                 }
             }
 
-            Player1.Move();
-            Player2.Move();
-            Ball.Move();
+            //Players[1].Move(gameTime);
+
+            foreach (Player p in Players) {
+                p.Move(gameTime);
+            }
+            Ball.Move(gameTime);
 
             base.Update(gameTime);
         }
