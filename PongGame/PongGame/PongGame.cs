@@ -93,7 +93,7 @@ namespace PongGame
             };
             #endregion
             Sprites.AddRange(Players);
-            PowerUps = new PowerUps(2000,
+            PowerUps = new PowerUps(10000,
                 Content.Load<Texture2D>("Sprites/ExtraBall"),
                 Content.Load<Texture2D>("Sprites/ExtraHeart")
                 );
