@@ -46,7 +46,7 @@ namespace PongGame.Content
             center = new Vector2(heartTexture.Width / 2 * lives , heartTexture.Width / 2 * lives );
             center *= heartDir;
 
-            for (int i = 0; i < lives; i++) {
+            for (int i = 0; i < 20; i++) {
                 heartPos.Add(new Vector2(Position.X + heartSteps.X * i - center.X, Position.Y + heartSteps.Y * i - center.Y));
             }
             

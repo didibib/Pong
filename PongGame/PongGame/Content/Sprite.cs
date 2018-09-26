@@ -11,8 +11,8 @@ namespace PongGame.Content
 {
     public class Sprite
     {
-        protected Texture2D Texture;
-        protected Rectangle Rectangle;
+        public Texture2D Texture;
+        public Rectangle Rectangle;
         public string name;
 
         public Vector2 Position;
@@ -20,8 +20,13 @@ namespace PongGame.Content
         public Vector2 Origin;
         public Vector2 Velocity;
         public Vector2 Acceleration;
-        protected float spriteSpeed;
+        public float spriteSpeed;
         public Vector2 Direction;
+
+        public Sprite(Texture2D texture) {
+            this.Texture = texture;
+            this.Origin = new Vector2(this.Texture.Width / 2, this.Texture.Height / 2);
+        }
 
         protected Sprite(Texture2D texture, float acceleration) {
             this.Texture = texture;
@@ -63,20 +68,6 @@ namespace PongGame.Content
             spriteBatch.Draw(Texture, Rectangle, null, Color.White * alpha, rotation, Origin, SpriteEffects.None, 0f);
         }
 
-        public void CheckCollision(Sprite target, Ball ball) {
-            if (Rectangle.Intersects(target.Rectangle)) {
-                if (Rectangle.Bottom > target.Rectangle.Top && Rectangle.Bottom < target.Rectangle.Bottom ||
-                    Rectangle.Top > target.Rectangle.Top && Rectangle.Top < target.Rectangle.Top ||
-                    Rectangle.Right < target.Rectangle.Right && Rectangle.Right > target.Rectangle.Left) {
-                    Direction = target.Direction;
-                    ball.AddSpeed(target.spriteSpeed);
-                }
-                else if (Rectangle.Bottom > target.Rectangle.Bottom || Rectangle.Top < target.Rectangle.Top)
-                    Direction.X *= -1;
-                else if (Rectangle.Right < target.Rectangle.Left || Rectangle.Left > target.Rectangle.Right)
-                    Direction.Y *= -1;
-
-            }
-        }
+        
     }
 }

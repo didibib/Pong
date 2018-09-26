@@ -14,30 +14,30 @@ namespace PongGame
     public class Game1 : Game
     {
         public static GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Random random;
-        List<Sprite> Sprites;
-        Color bgColor = new Color(255, 255, 255);
+        public SpriteBatch spriteBatch;
 
-        List<Player> Players;
-        Ball Ball;
+        private List<Sprite> Sprites;
+        private Color bgColor = new Color(255, 255, 255);
 
-        float ballSpeed = 3f;
+        private List<Player> Players;
+        public List<Ball> Balls;
+        public PowerUps PowerUps;
 
         public Game1() {
-            graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this) {
+                PreferredBackBufferWidth = 800,
+                PreferredBackBufferHeight = 720
+            };
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize() {
-            random = new Random();
             Sprites = new List<Sprite>();
-            Ball = new Ball(
-                Content.Load<Texture2D>("Sprites/Ball"),
-                new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2),
-                random.Next(0, 3),
-                ballSpeed);
-            Sprites.Add(Ball);
+            Balls = new List<Ball>() {
+                new Ball(Content.Load<Texture2D>("Sprites/Ball"),
+                new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2))
+            };
+            Sprites.AddRange(Balls);
 
             #region Players
             Players = new List<Player>() {
@@ -93,6 +93,10 @@ namespace PongGame
             };
             #endregion
             Sprites.AddRange(Players);
+            PowerUps = new PowerUps(2000,
+                Content.Load<Texture2D>("Sprites/ExtraBall"),
+                Content.Load<Texture2D>("Sprites/ExtraHeart")
+                );
 
             base.Initialize();
         }
@@ -112,22 +116,21 @@ namespace PongGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            for (int i = 0; i < Sprites.Count; i++) {
-                if (Sprites[i] is Ball) {
-                    for (int j = 0; j < Sprites.Count; j++) {
-                        if (i != j) {
-                            Ball.CheckCollision(Sprites[j], Ball);
-                        }
-                    }
+            PowerUps.Update(gameTime);
+
+            for (int i = 0; i < Balls.Count; i++) {
+                for (int j = 0; j < Players.Count; j++) {
+                    Balls[i].CheckCollisionPlayer(Players[j]);
+
                 }
             }
+            PowerUps.CheckBallCollision(Balls, Sprites);
 
-            //Players[1].Move(gameTime);
-
-            foreach (Player p in Players) {
+            foreach (Player p in Players)
                 p.Move(gameTime);
-            }
-            Ball.Move(gameTime);
+
+            foreach (Ball b in Balls)
+                b.Move(gameTime);
 
             base.Update(gameTime);
         }
@@ -139,6 +142,7 @@ namespace PongGame
             foreach (Sprite sprite in Sprites) {
                 sprite.Draw(spriteBatch);
             }
+            PowerUps.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -25,7 +25,6 @@ namespace PongGame.Content
         private float maxReleaseTime = 100;
         public float chargeTimer;
         private float timer;
-        private Vector2 Velocity;
 
         private Input Input;
         private KeyboardState newKState;

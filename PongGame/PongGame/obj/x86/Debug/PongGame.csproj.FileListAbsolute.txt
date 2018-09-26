@@ -27,3 +27,5 @@ C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windo
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Peddle.xnb
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Arrow.xnb
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Heart.xnb
+C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\ExtraBall.xnb
+C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\ExtraHeart.xnb

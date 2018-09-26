@@ -15,13 +15,14 @@ namespace PongGame.Content
         public float speed;
         private float minSpeed;
         private float friction = 0.01f;
+        public Player ActivePlayer;
 
         public string side;
+        private Random random = new Random();
 
-        public Ball(Texture2D texture, Vector2 position, int direction, float startSpeed) : base(texture, startSpeed) {
-            StartDirection(direction);
+        public Ball(Texture2D texture, Vector2 position, float startSpeed = 3f) : base(texture, startSpeed) {
+            StartDirection();
             speed = minSpeed = startSpeed;
-            spriteSpeed = .2f;
             Position = position;
         }
 
@@ -37,24 +38,45 @@ namespace PongGame.Content
         }
 
         public void AddSpeed(float increment) {
-            speed += increment;            
-        }       
+            speed += increment;
+        }
 
-        private void StartDirection(int d) {
+        private void StartDirection() {
+            int d = random.Next(0, 3);
             switch (d) {
                 case 0:
-                    Direction = new Vector2(1, 1);
+                    Direction = new Vector2(1, 0);
                     break;
                 case 1:
-                    Direction = new Vector2(-1, 1);
+                    Direction = new Vector2(-1, 0);
                     break;
                 case 2:
-                    Direction = new Vector2(1, -1);
+                    Direction = new Vector2(0, 1);
                     break;
                 case 3:
-                    Direction = new Vector2(-1, -1);
+                    Direction = new Vector2(0, -1);
                     break;
             }
+        }
+
+        public void CheckCollisionPlayer(Player target) {
+            if (Rectangle.Intersects(target.Rectangle)) {
+                if (Rectangle.Bottom > target.Rectangle.Top && Rectangle.Bottom < target.Rectangle.Bottom ||
+                    Rectangle.Top > target.Rectangle.Top && Rectangle.Top < target.Rectangle.Top ||
+                    Rectangle.Right < target.Rectangle.Right && Rectangle.Right > target.Rectangle.Left) {
+                    Direction = target.Direction;
+                    AddSpeed(target.spriteSpeed);
+                    SetPlayer(target);
+                }
+                else if (Rectangle.Bottom > target.Rectangle.Bottom || Rectangle.Top < target.Rectangle.Top)
+                    Direction.X *= -1;
+                else if (Rectangle.Right < target.Rectangle.Left || Rectangle.Left > target.Rectangle.Right)
+                    Direction.Y *= -1;
+            }
+        }
+
+        public void SetPlayer(Player player) {
+            ActivePlayer = player;
         }
     }
 }
