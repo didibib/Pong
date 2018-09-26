@@ -8,13 +8,26 @@ namespace PongGame.Content
 {
     public class Score
     {
-        //public List<Player> players
+        /*
+        static void wallHit(string side, string players) {
+            for (int i = 0; i < players.Count; i++) {
+                if (players[i].name == Player) {
+                    players[i].loseHeart();
+                }
+            }
+         }
+         
+        public void loseHeart(){
+            hearts--;
+            if (hearts == 0) { players.RemoveAt(i); }
+        }
 
-        //static void AddScore(string side, string player) {
-        //    for (int i = 0; i < players.Count; i++) {
-        //        if(players[i].name == player)
-        //            players[i].LoseHeart
-        //    }
-        //}
+        public void checkPlayers()
+        {
+            if (players.Count == 1) { 
+            set winString (players[0] + " has won!"); 
+            gameState = 7;
+            }
+        }*/
     }
 }

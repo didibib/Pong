@@ -8,7 +8,7 @@ using PongGame.Content;
 
 namespace PongGame
 {
-    /// <summary>
+    /// <summary
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
@@ -18,6 +18,9 @@ namespace PongGame
         Random random;
         List<Sprite> Sprites;
         Color bgColor = new Color(255, 255, 255);
+        enum GameStatus { BootScreen, Options, PlayerSelect, GamePlay, GameOver };
+        GameStatus gameStatus = GameStatus.BootScreen;
+
 
         List<Player> Players;
         Ball Ball;
@@ -94,41 +97,45 @@ namespace PongGame
             #endregion
             Sprites.AddRange(Players);
 
+
             base.Initialize();
         }
 
         protected override void LoadContent() {
-            // Create a new SpriteBatch, which can be used to draw textures.
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
         }
 
-        protected override void Update(GameTime gameTime) {
+        protected override void Update(GameTime gameTime)
+        {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            for (int i = 0; i < Sprites.Count; i++) {
-                if (Sprites[i] is Ball) {
-                    for (int j = 0; j < Sprites.Count; j++) {
-                        if (i != j) {
-                            Ball.CheckCollision(Sprites[j], Ball);
-                        }
+            switch (gameStatus)
+            {
+                case GameStatus.GamePlay:
+                    for (int i = 0; i < Sprites.Count; i++)
+                        if (Sprites[i] is Ball)
+                            {
+                                for (int j = 0; j < Sprites.Count; j++)
+                                {
+                                    if (i != j)
+                                    {
+                                        Ball.CheckCollision(Sprites[j], Ball);
+                                    }
+                                }
+                            }
+                    foreach (Player p in Players)
+                    {
+                        p.Move(gameTime);
                     }
-                }
+                    Ball.Move(gameTime);
+                    break;
             }
-
-            //Players[1].Move(gameTime);
-
-            foreach (Player p in Players) {
-                p.Move(gameTime);
-            }
-            Ball.Move(gameTime);
-
             base.Update(gameTime);
         }
 
@@ -136,9 +143,13 @@ namespace PongGame
             GraphicsDevice.Clear(bgColor);
 
             spriteBatch.Begin();
-            foreach (Sprite sprite in Sprites) {
-                sprite.Draw(spriteBatch);
+            switch (gameStatus)
+            {
+                case GameStatus.GamePlay:
+                    foreach (Sprite sprite in Sprites) { sprite.Draw(spriteBatch); }
+                    break;
             }
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
