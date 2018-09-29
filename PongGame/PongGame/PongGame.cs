@@ -22,8 +22,8 @@ namespace PongGame
         enum GameStatus { BootMenu, Options, PlayerSelect, GamePlay, GameOver };
         GameStatus gameStatus = GameStatus.BootMenu;
         Texture2D btn;
-        public string PlayerID;
-        public static string wantedPlayer { get; set; } = null;
+        public static string wantedPlayer = null;
+        SpriteFont font;
 
 
         List<Player> Players;
@@ -103,59 +103,56 @@ namespace PongGame
             //Sprites.AddRange(Players);
             #endregion
             #endregion
-            #region BootMenu
-            btn = this.Content.Load<Texture2D>("Sprites/btn");
-            #endregion
 
             base.Initialize();
         }
 
         protected override void LoadContent() {
-
+            btn = this.Content.Load<Texture2D>("Sprites/btn");
+            font = Content.Load<SpriteFont>("Arial");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
         }
 
         protected override void UnloadContent() {
+            btn.Dispose();
         }
 
-        public static void callMethod(int x)
+        public static void callPlayer(int x)
         {
             switch(x) {
                 case 1:
-                    Game1.wantedPlayer = "Player1";
+                    wantedPlayer = "Player1";
                     break;
                 case 2:
-                    Game1.wantedPlayer = "Player2";
+                    wantedPlayer = "Player2";
                     break;
                 case 3:
-                    Game1.wantedPlayer = "Player3";
+                    wantedPlayer = "Player3";
                     break;
                 case 4:
-                    Game1.wantedPlayer = "Player4";
+                    wantedPlayer = "Player4";
                     break;
             }
         }
 
         public void LoseLives(string x)
         {
-            foreach (Player player in ActivePlayers) {
-                if (player.name == x)
+            for (int i = ActivePlayers.Count; i --> 0;) {
+                if (ActivePlayers[i].name == x)
                 {
-                    player.lives--;
-                    if (player.lives == 0)
+                    ActivePlayers[i].lives--;
+                    if (ActivePlayers[i].lives <= 0)
                     {
-                        ActivePlayers.RemoveAll(y => y.name == x);
-                        Sprites.AddRange(ActivePlayers);
+                        ActivePlayers.RemoveAt(i);
                     }
-
+                    Ball.resetPotition();
                 }
             }
-        }
-        public void kill(string x)
-        {
             
+            if (ActivePlayers.Count == 1)
+            {
+                gameStatus = GameStatus.GameOver;
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -167,7 +164,7 @@ namespace PongGame
             switch (gameStatus)
             {
                 case GameStatus.BootMenu:
-                    this.IsMouseVisible = true;
+                    while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
                     #region StartBtn
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed 
                         & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2
@@ -182,7 +179,7 @@ namespace PongGame
                             & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 5 * 4)
 
                         {
-                            //Options, Controls, Etc.
+                            //Controls
                         }
                     }
                     #endregion
@@ -198,20 +195,17 @@ namespace PongGame
                             & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 4)
                         {
                             ActivePlayers.RemoveRange(2, 2);
-                            Sprites.AddRange(ActivePlayers);
                             gameStatus = GameStatus.GamePlay;
                         }
                         else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2
                             & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 2)
                         {
                             ActivePlayers.RemoveRange(3, 1);
-                            Sprites.AddRange(ActivePlayers);
                             gameStatus = GameStatus.GamePlay;
                         }
                         else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4 * 3
                             & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 4 * 3)
                         {
-                            Sprites.AddRange(ActivePlayers);
                             gameStatus = GameStatus.GamePlay;
                         }
                     }
@@ -229,12 +223,9 @@ namespace PongGame
                     for (int i = 0; i < Sprites.Count; i++)
                         if (Sprites[i] is Ball)
                             {
-                                for (int j = 0; j < Sprites.Count; j++)
+                                for (int j = 0; j < ActivePlayers.Count; j++)
                                 {
-                                    if (i != j)
-                                    {
-                                        Ball.CheckCollision(Sprites[j], Ball);
-                                    }
+                                        Ball.CheckCollision(ActivePlayers[j], Ball);
                                 }
                             }
                     foreach (Player p in Players)
@@ -244,6 +235,21 @@ namespace PongGame
                     Ball.Move(gameTime);
                     #endregion
                     break;
+                case GameStatus.GameOver:
+                    #region GameOver
+                    while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed
+                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2
+                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + btn.Width) / 2
+                        & Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2
+                        & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 2)
+                    {
+                        ActivePlayers.AddRange(Players);
+                        for (int i = ActivePlayers.Count; i-- > 0;) { ActivePlayers[i].lives = 3; }
+                        gameStatus = GameStatus.BootMenu;
+                    }
+                    break;
+                    #endregion
             }
             base.Update(gameTime);
         }
@@ -280,6 +286,13 @@ namespace PongGame
 
                 case GameStatus.GamePlay:
                     foreach (Sprite sprite in Sprites) { sprite.Draw(spriteBatch); }
+                    foreach (Sprite sprite in ActivePlayers) { sprite.Draw(spriteBatch); }
+                    break;
+                case GameStatus.GameOver:
+                    spriteBatch.DrawString(font, ActivePlayers[0].name.ToString() + " has won!", new Vector2(30, graphics.GraphicsDevice.Viewport.Height - 50), Color.Black);
+                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2, btn.Width, btn.Height));
                     break;
             }
 

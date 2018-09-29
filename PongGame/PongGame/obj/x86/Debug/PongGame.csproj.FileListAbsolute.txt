@@ -57,3 +57,4 @@ C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.cspr
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.exe
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.pdb
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\btn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Arial.xnb
