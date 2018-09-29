@@ -96,8 +96,8 @@ namespace PongGame
                 },
                 "Player4")
             };
+            //ActivePlayers list for keeping track of active players
             ActivePlayers = new List<Player>();
-            //Sprites.AddRange(Players);
             #endregion
             #endregion
             PowerUps = new PowerUps(10,
@@ -108,6 +108,7 @@ namespace PongGame
         }
 
         protected override void LoadContent() {
+            //Loading content to be used
             TwoPlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/2PlayersBtn");
             ThreePlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/3PlayersBtn");
             FourPlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/4PlayersBtn");
@@ -120,10 +121,12 @@ namespace PongGame
         }
 
         protected override void UnloadContent() {
+            //Disposing loaded content 
             StartBtn.Dispose();
         }
 
         public static void callPlayer(int x) {
+            //Recieves calls from Ball and sets string wantedPlayer
             switch (x) {
                 case 1:
                     wantedPlayer = "Player1";
@@ -143,16 +146,20 @@ namespace PongGame
         public void LoseLives(string x) {
             for (int i = ActivePlayers.Count; i-- > 0;) {
                 if (ActivePlayers[i].name == x) {
+                //For every player with the same name as the wantedPlayer string, a life is removed
                     ActivePlayers[i].lives--;
                     if (ActivePlayers[i].lives <= 0) {
+                        //If their lives reach zero, they are no longer active, thus removed from the ActivePlayers list
                         ActivePlayers.RemoveAt(i);
                     }
+                    //Extra ball is reset and the reset funtion is called for the original ball
                     Balls.RemoveRange(1, Balls.Count-1);
                     Balls[0].resetPotition();
                 }
             }
 
             if (ActivePlayers.Count == 1) {
+                //If only 1 player is active, this player has won and the GameOver sequence is started.
                 gameStatus = GameStatus.GameOver;
             }
         }
@@ -164,7 +171,9 @@ namespace PongGame
 
             switch (gameStatus) {
                 case GameStatus.BootMenu:
+                //Quickly setting Mouse button visibility after startup/restart
                     while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
+                    //Button to start the game (Copy Players list to ActivePlayers, changing Game Status from BootMenu to PlayerSelect)
                     #region StartBtn
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed
                         & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2
@@ -181,6 +190,7 @@ namespace PongGame
                     break;
 
                 case GameStatus.PlayerSelect:
+                    // Selecting the desired amount of players (Remove unnecessary players with RemoveRange() and setting Game Status to GamePlay)
                     #region SelectBtns
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed
                         & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2
@@ -206,6 +216,7 @@ namespace PongGame
                 case GameStatus.GamePlay:
                     #region GamePlay
                     if (wantedPlayer != null) {
+                        // If A wanted player is set in the callPlayer() method, the LoseLives() function is started for this player.
                         LoseLives(wantedPlayer);
                         wantedPlayer = null;
                     }
@@ -225,6 +236,7 @@ namespace PongGame
                     #endregion
                     break;
                 case GameStatus.GameOver:
+                    //Reset button for resetting the game to the Boot Menu and resetting all player lives to 3
                     #region GameOver
                     while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed
@@ -248,6 +260,7 @@ namespace PongGame
             spriteBatch.Begin();
             switch (gameStatus) {
                 case GameStatus.BootMenu:
+                    //Draws Start button in the middle of the screen at 3/5 the screen length
                     #region DrwStartBtns
                     spriteBatch.Draw(StartBtn, destinationRectangle: new Rectangle(
                         (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
@@ -258,6 +271,7 @@ namespace PongGame
                     #endregion
                     break;
                 case GameStatus.PlayerSelect:
+                    //Draws Player Select Buttons in the middle of the screen at 1/4th, 1/2th and 3/4th the screen length
                     #region DrwStartBtns2
                     spriteBatch.Draw(TwoPlayersBtn, destinationRectangle: new Rectangle(
                         (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
@@ -278,6 +292,7 @@ namespace PongGame
                     PowerUps.Draw(spriteBatch);
                     break;
                 case GameStatus.GameOver:
+                    //Draws winned statement in the bottom left and reset button in the middle of the screen
                     spriteBatch.DrawString(font, ActivePlayers[0].name.ToString() + " has won!", new Vector2(30, graphics.GraphicsDevice.Viewport.Height - 50), Color.Black);
                     spriteBatch.Draw(ResetBtn, destinationRectangle: new Rectangle(
                         (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
