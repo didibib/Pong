@@ -29,7 +29,8 @@ namespace PongGame.Content
         private Vector2 heartSteps = new Vector2(20, 20);
         private Vector2 heartOrigin;
         private Vector2 center;
-        public int lives;
+        public int lives { get; set; }
+        public bool dead { get; set; } = false;
 
         public Player(Texture2D texture, Texture2D arrowTexture, Texture2D heartTexture, Input input, string name, int lives = 3) : base(texture, 0.24f, name) {
             this.name = name;
@@ -46,7 +47,7 @@ namespace PongGame.Content
             center = new Vector2(heartTexture.Width / 2 * lives , heartTexture.Width / 2 * lives );
             center *= heartDir;
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 50; i++) {
                 heartPos.Add(new Vector2(Position.X + heartSteps.X * i - center.X, Position.Y + heartSteps.Y * i - center.Y));
             }
             

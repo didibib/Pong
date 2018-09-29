@@ -67,7 +67,5 @@ namespace PongGame.Content
             Rectangle = new Rectangle((int)(Position.X), (int)(Position.Y), Texture.Width - scale, Texture.Height);
             spriteBatch.Draw(Texture, Rectangle, null, Color.White * alpha, rotation, Origin, SpriteEffects.None, 0f);
         }
-
-        
     }
 }

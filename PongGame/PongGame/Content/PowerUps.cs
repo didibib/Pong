@@ -28,11 +28,12 @@ namespace PongGame.Content
             ListPowerUps.Add(extraBall, "extraBall");
             ListPowerUps.Add(extraHeart, "extraHeart");
             ActivePowerUps = new List<Sprite>();
-            this.interval = interval;
+            this.interval = interval * 1000;
         }
 
         public void Update(GameTime gameTime) {
             timer += gameTime.ElapsedGameTime.Milliseconds;
+            Console.WriteLine(timer);
             if (timer >= interval) {
                 SpawnPowerUp();
                 timer = 0;
@@ -45,7 +46,7 @@ namespace PongGame.Content
             }
         }
 
-        public void CheckBallCollision(List<Ball> balls, List<Sprite> sprites) {
+        public void CheckBallCollision(List<Ball> balls) {
             for (int i = 0; i < balls.Count; i++) {
                 for (int j = 0; j < ActivePowerUps.Count; j++) {
                     if (balls[i].Rectangle.Intersects(ActivePowerUps[j].Rectangle)) {
@@ -54,7 +55,6 @@ namespace PongGame.Content
                             case "extraBall":
                                 Ball ball = new Ball(balls[0].Texture, new Vector2(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2));
                                 balls.Add(ball);
-                                sprites.Add(ball);
                                 ActivePowerUps.RemoveAt(j);
                                 break;
                             case "extraHeart":
@@ -73,7 +73,7 @@ namespace PongGame.Content
             Position.X = random.Next(margin, graphics.Viewport.Width - margin);
             Position.Y = random.Next(margin, graphics.Viewport.Height - margin);
             index = random.Next(0, ListPowerUps.Count);
-            Sprite newPowerUp = new Sprite(ListPowerUps.ElementAt(index).Key);
+            Sprite newPowerUp = new Sprite(ListPowerUps.ElementAt(1).Key);
             newPowerUp.Position = Position;
             ActivePowerUps.Add(newPowerUp);
         }
