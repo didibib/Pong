@@ -28,12 +28,14 @@ namespace PongGame.Content
         }
         public void resetPotition()
         {
+            //Resets the ball to the middle of the screen
             Position = new Vector2(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2);
             speed = minSpeed;
         }
 
         public void Move(GameTime gameTime)
         {
+            //Hit Detection with walls, calls callPlayer() method for each wall
             if (Position.X <= 0 + Rectangle.Width / 2) // Player 1
             { Direction.X *= -1; Game1.callPlayer(1); }
             if (Position.X >= graphics.Viewport.Width - Rectangle.Width / 2) // Player 2
