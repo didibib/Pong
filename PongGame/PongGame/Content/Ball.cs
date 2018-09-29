@@ -15,7 +15,6 @@ namespace PongGame.Content
         public float speed;
         private float minSpeed;
         private float friction = 0.01f;
-
         public string side;
 
         public Ball(Texture2D texture, Vector2 position, int direction, float startSpeed) : base(texture, startSpeed) {
@@ -25,11 +24,17 @@ namespace PongGame.Content
             Position = position;
         }
 
-        public void Move(GameTime gameTime) {
-            if (Position.X >= graphics.Viewport.Width - Rectangle.Width / 2 || Position.X <= 0 + Rectangle.Width / 2)
-                Direction.X *= -1;
-            if (Position.Y >= graphics.Viewport.Height - Rectangle.Height / 2 || Position.Y <= 0 + Rectangle.Height / 2)
-                Direction.Y *= -1;
+        public void Move(GameTime gameTime)
+        {
+            if (Position.X <= 0 + Rectangle.Width / 2) // Player 1
+            { Direction.X *= -1; Game1.callMethod(1); }
+            if (Position.X >= graphics.Viewport.Width - Rectangle.Width / 2) // Player 2
+            { Direction.X *= -1; Game1.callMethod(2); }
+            if (Position.Y <= 0 + Rectangle.Height / 2) // Player 3
+            { Direction.Y *= -1; Game1.callMethod(3); }
+            if (Position.Y >= graphics.Viewport.Height - Rectangle.Height / 2) // Player 4
+            { Direction.Y *= -1; Game1.callMethod(4); }
+            
 
             speed = MathHelper.Clamp(speed, minSpeed + 0.2f, 10f);
             Position += Direction * speed;

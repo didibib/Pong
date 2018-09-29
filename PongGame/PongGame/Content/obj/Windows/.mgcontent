@@ -4,9 +4,10 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Ball.png</File>
-    <File>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Peddle.png</File>
-    <File>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Arrow.png</File>
-    <File>C:/Users/Tariq/Documents/School/UU/Game Programmeren/PongGame/PongGame/Content/Sprites/Heart.png</File>
+    <File>C:/Users/Jase/Documents/Gits/GProg/PongGame/PongGame/Content/Sprites/Ball.png</File>
+    <File>C:/Users/Jase/Documents/Gits/GProg/PongGame/PongGame/Content/Sprites/Peddle.png</File>
+    <File>C:/Users/Jase/Documents/Gits/GProg/PongGame/PongGame/Content/Sprites/Arrow.png</File>
+    <File>C:/Users/Jase/Documents/Gits/GProg/PongGame/PongGame/Content/Sprites/Heart.png</File>
+    <File>C:/Users/Jase/Documents/Gits/GProg/PongGame/PongGame/Content/Sprites/btn.png</File>
   </SourceFiles>
 </SourceFileCollection>

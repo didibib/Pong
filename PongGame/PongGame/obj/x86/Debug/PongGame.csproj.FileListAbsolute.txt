@@ -27,3 +27,33 @@ C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windo
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Peddle.xnb
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Arrow.xnb
 C:\Users\Tariq\Documents\School\UU\Game Programmeren\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Heart.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Arrow.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Ball.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Heart.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Peddle.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\PongGame.exe
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\PongGame.pdb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.csprojAssemblyReference.cache
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.csproj.CoreCompileInputs.cache
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.csproj.CopyComplete
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.exe
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.pdb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\btn.xnb
