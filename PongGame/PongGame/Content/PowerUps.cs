@@ -33,7 +33,6 @@ namespace PongGame.Content
 
         public void Update(GameTime gameTime) {
             timer += gameTime.ElapsedGameTime.Milliseconds;
-            Console.WriteLine(timer);
             if (timer >= interval) {
                 SpawnPowerUp();
                 timer = 0;
@@ -46,7 +45,7 @@ namespace PongGame.Content
             }
         }
 
-        public void CheckBallCollision(List<Ball> balls) {
+        public void CheckBallCollision(List<Ball> balls) { // We check of een bal met een power up collide
             for (int i = 0; i < balls.Count; i++) {
                 for (int j = 0; j < ActivePowerUps.Count; j++) {
                     if (balls[i].Rectangle.Intersects(ActivePowerUps[j].Rectangle)) {
@@ -73,7 +72,7 @@ namespace PongGame.Content
             Position.X = random.Next(margin, graphics.Viewport.Width - margin);
             Position.Y = random.Next(margin, graphics.Viewport.Height - margin);
             index = random.Next(0, ListPowerUps.Count);
-            Sprite newPowerUp = new Sprite(ListPowerUps.ElementAt(1).Key);
+            Sprite newPowerUp = new Sprite(ListPowerUps.ElementAt(index).Key);
             newPowerUp.Position = Position;
             ActivePowerUps.Add(newPowerUp);
         }

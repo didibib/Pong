@@ -17,7 +17,6 @@ namespace PongGame
         SpriteBatch spriteBatch;
         Random random;
         public List<Player> ActivePlayers;
-        List<Sprite> Sprites;
         Color bgColor = new Color(255, 255, 255);
         enum GameStatus { BootMenu, Options, PlayerSelect, GamePlay, GameOver };
         GameStatus gameStatus = GameStatus.BootMenu;
@@ -38,7 +37,6 @@ namespace PongGame
         protected override void Initialize() {
             #region GamePlay
             random = new Random();
-            Sprites = new List<Sprite>();
             Balls = new List<Ball>() {
                 new Ball(Content.Load<Texture2D>("Sprites/Ball"),
                 new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2))
@@ -141,6 +139,8 @@ namespace PongGame
         }
 
         public void LoseLives(string x) {
+            // Tijdens het itereren over een lijst verwijderen we eventueel objecten, daarom doen dat in omgekeerde richting
+            // https://stackoverflow.com/questions/1582285/how-to-remove-elements-from-a-generic-list-while-iterating-over-it
             for (int i = ActivePlayers.Count; i-- > 0;) {
                 if (ActivePlayers[i].name == x) {
                     ActivePlayers[i].lives--;
@@ -272,7 +272,6 @@ namespace PongGame
                     break;
 
                 case GameStatus.GamePlay:
-                    foreach (Sprite sprite in Sprites) { sprite.Draw(spriteBatch); }
                     foreach (Sprite sprite in ActivePlayers) { sprite.Draw(spriteBatch); }
                     foreach(Sprite sprite in Balls) { sprite.Draw(spriteBatch); }
                     PowerUps.Draw(spriteBatch);

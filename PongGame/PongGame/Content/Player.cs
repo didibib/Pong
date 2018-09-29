@@ -38,20 +38,21 @@ namespace PongGame.Content
             this.lives = lives;
             this.heartTexture = heartTexture;
 
-            rotation = MathHelper.ToRadians((int)input.Position);
-            StartDirection(input.Position);
+            rotation = MathHelper.ToRadians((int)input.Position); // Op basis van de Input.StartPosition draaien we de speler de juiste kant op
+            StartDirection(input.Position); // Hier wordt de Position en Acceleration bepaalt 
 
-            heartDir = Acceleration;
-            heartSteps *= heartDir;
+            heartDir = Acceleration; // Acceleration gaat maar in één richting en dat willen we ook voor de levens
+            heartSteps *= heartDir; // Een vector2 wordt gebruikt voor de stappen in beide richtingen en vermenigvuldig dat met de heartDir zodat één as op nul wordt gezet... 
+            // ... en de levens op één lijn komen te liggen.
             heartOrigin = new Vector2(heartTexture.Width / 2, heartTexture.Height / 2);
             center = new Vector2(heartTexture.Width / 2 * lives , heartTexture.Width / 2 * lives );
             center *= heartDir;
 
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 50; i++) { // Het is onduidelijk hoeveel levens een speler zal krijgen dus we creëen een lijst van veel posities
                 heartPos.Add(new Vector2(Position.X + heartSteps.X * i - center.X, Position.Y + heartSteps.Y * i - center.Y));
             }
             
-            Peddle = new Peddle(arrowTexture, PlayerInput, Position, name);
+            Peddle = new Peddle(arrowTexture, PlayerInput, Position, name); // De peddle (de pijl) is een child van player
         }
 
         public void Move(GameTime gameTime) {
@@ -88,13 +89,17 @@ namespace PongGame.Content
                 }
 
             }
-            Direction = Peddle.Move(Position, PlayerInput, Velocity, gameTime);
-            spriteSpeed = Peddle.GetSpeed();
+            Direction = Peddle.Move(Position, PlayerInput, Velocity, gameTime); // De collisions gaan tussen Ball en Player, maar de informatie van de pijl (aka Peddle) staan in zijn eigen object.
+                                                                                // Die bepaalt oa de direction, die we hier ophalen. Hier laten we de pijl ook met de speler mee bewegen
+
+            spriteSpeed = Peddle.GetSpeed(); // spriteSpeed is wat we als "boost" aan de bal meegegeven
+
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
-            Peddle.Draw(spriteBatch, 0.3f, Peddle.GetScale());            
+            Peddle.Draw(spriteBatch, 0.3f, Peddle.GetScale()); // De peddle wordt hier getekend              
 
+            // Eerder was gezegd dat we de sprites roteren op bases van de Input.SpritePosition, maar dat werkte niet lekker met de Rectangle, die doen we hier dus apart.
             if (PlayerInput.Position == Input.SpritePosition.Left || PlayerInput.Position == Input.SpritePosition.Right)
                 base.Draw(spriteBatch);
             else {
