@@ -21,7 +21,7 @@ namespace PongGame
         Color bgColor = new Color(255, 255, 255);
         enum GameStatus { BootMenu, Options, PlayerSelect, GamePlay, GameOver };
         GameStatus gameStatus = GameStatus.BootMenu;
-        Texture2D btn;
+        Texture2D TwoPlayersBtn, ThreePlayersBtn, FourPlayersBtn, ControlsBtn, ResetBtn, StartBtn;
         public static string wantedPlayer = null;
         SpriteFont font;
 
@@ -108,13 +108,19 @@ namespace PongGame
         }
 
         protected override void LoadContent() {
-            btn = this.Content.Load<Texture2D>("Sprites/btn");
+            TwoPlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/2PlayersBtn");
+            ThreePlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/3PlayersBtn");
+            FourPlayersBtn = this.Content.Load<Texture2D>("Sprites/Buttons/4PlayersBtn");
+            ControlsBtn = this.Content.Load<Texture2D>("Sprites/Buttons/ControlsBtn");
+            ResetBtn = this.Content.Load<Texture2D>("Sprites/Buttons/ResetBtn");
+            StartBtn = this.Content.Load<Texture2D>("Sprites/Buttons/StartBtn");
+            font = Content.Load<SpriteFont>("Arial");
             font = Content.Load<SpriteFont>("Arial");
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void UnloadContent() {
-            btn.Dispose();
+            StartBtn.Dispose();
         }
 
         public static void callPlayer(int x)
@@ -167,16 +173,16 @@ namespace PongGame
                     while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
                     #region StartBtn
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed 
-                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2
-                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + btn.Width) / 2)
+                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2
+                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + StartBtn.Width) / 2)
                     {
-                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 5 * 3
-                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 5 * 3)
+                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 5 * 3
+                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 5 * 3)
 
                         { ActivePlayers.AddRange(Players); gameStatus = GameStatus.PlayerSelect; }
 
-                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 5 * 4
-                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 5 * 4)
+                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 5 * 4
+                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 5 * 4)
 
                         {
                             //Controls
@@ -188,23 +194,23 @@ namespace PongGame
                 case GameStatus.PlayerSelect:
                     #region SelectBtns
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed 
-                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2
-                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + btn.Width) / 2)
+                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2
+                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + StartBtn.Width) / 2)
                     {
-                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4
-                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 4)
+                        if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 4
+                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 4)
                         {
                             ActivePlayers.RemoveRange(2, 2);
                             gameStatus = GameStatus.GamePlay;
                         }
-                        else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2
-                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 2)
+                        else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 2
+                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 2)
                         {
                             ActivePlayers.RemoveRange(3, 1);
                             gameStatus = GameStatus.GamePlay;
                         }
-                        else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4 * 3
-                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 4 * 3)
+                        else if (Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 4 * 3
+                            & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 4 * 3)
                         {
                             gameStatus = GameStatus.GamePlay;
                         }
@@ -239,10 +245,10 @@ namespace PongGame
                     #region GameOver
                     while (this.IsMouseVisible == false) { this.IsMouseVisible = true; }
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed
-                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2
-                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + btn.Width) / 2
-                        & Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2
-                        & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + btn.Height) / 2)
+                        & Mouse.GetState().X >= (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2
+                        & Mouse.GetState().X <= (graphics.GraphicsDevice.Viewport.Width + StartBtn.Width) / 2
+                        & Mouse.GetState().Y >= (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 2
+                        & Mouse.GetState().Y <= (graphics.GraphicsDevice.Viewport.Height + StartBtn.Height) / 2)
                     {
                         ActivePlayers.AddRange(Players);
                         for (int i = ActivePlayers.Count; i-- > 0;) { ActivePlayers[i].lives = 3; }
@@ -261,26 +267,26 @@ namespace PongGame
             switch (gameStatus)
             {
                 case GameStatus.BootMenu:
-                    #region Drwbtns
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width)/2, 
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height)/5*3, btn.Width, btn.Height));
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width)/2,
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height)/5*4, btn.Width, btn.Height));
+                    #region DrwStartBtns
+                    spriteBatch.Draw(StartBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 5 * 3, StartBtn.Width, StartBtn.Height));
+                    spriteBatch.Draw(ControlsBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 5 * 4, StartBtn.Width, StartBtn.Height));
                     #endregion
                     break;
                 case GameStatus.PlayerSelect:
-                    #region Drwbtns2
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2,
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4, btn.Width, btn.Height));
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2,
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4 *2, btn.Width, btn.Height));
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2,
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 4 *3, btn.Width, btn.Height));
+                    #region DrwStartBtns2
+                    spriteBatch.Draw(TwoPlayersBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 4, StartBtn.Width, StartBtn.Height));
+                    spriteBatch.Draw(ThreePlayersBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 4 * 2, StartBtn.Width, StartBtn.Height));
+                    spriteBatch.Draw(FourPlayersBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 4 * 3, StartBtn.Width, StartBtn.Height));
                     #endregion
                     break;
 
@@ -290,9 +296,9 @@ namespace PongGame
                     break;
                 case GameStatus.GameOver:
                     spriteBatch.DrawString(font, ActivePlayers[0].name.ToString() + " has won!", new Vector2(30, graphics.GraphicsDevice.Viewport.Height - 50), Color.Black);
-                    spriteBatch.Draw(btn, destinationRectangle: new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.Width - btn.Width) / 2,
-                        (graphics.GraphicsDevice.Viewport.Height - btn.Height) / 2, btn.Width, btn.Height));
+                    spriteBatch.Draw(ResetBtn, destinationRectangle: new Rectangle(
+                        (graphics.GraphicsDevice.Viewport.Width - StartBtn.Width) / 2,
+                        (graphics.GraphicsDevice.Viewport.Height - StartBtn.Height) / 2, StartBtn.Width, StartBtn.Height));
                     break;
             }
 

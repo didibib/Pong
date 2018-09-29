@@ -58,3 +58,9 @@ C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.exe
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\obj\x86\Debug\PongGame.pdb
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\btn.xnb
 C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Arial.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\2PlayersBtn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\3PlayersBtn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\4PlayersBtn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\ControlsBtn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\ResetBtn.xnb
+C:\Users\Jase\Documents\Gits\GProg\PongGame\PongGame\bin\Windows\x86\Debug\Content\Sprites\Buttons\StartBtn.xnb
